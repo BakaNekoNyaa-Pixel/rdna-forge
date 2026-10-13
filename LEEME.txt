@@ -1,0 +1,51 @@
+RDNA Forge
+==========
+
+Estudio de imagenes local, estilo Stable Diffusion WebUI.
+No usa Grok. No llama a ninguna API. Genera en tu PC.
+
+En Windows (recomendado para la RX 9070)
+-----------------------------------------
+1. Clona el repositorio:
+   git clone https://github.com/BakaNekoNyaa-Pixel/rdna-forge.git
+   cd rdna-forge
+2. Doble clic en Launcher.exe (si esta en la carpeta)
+   o ejecuta:
+   powershell -ExecutionPolicy Bypass -File .\windows\install.ps1
+   La primera vez descarga Python embebido, PyTorch DirectML
+   y el modelo Stable Diffusion 1.5 (unos 4 GB). Hace falta internet
+   SOLO en esa descarga.
+3. Al terminar aparece Star.bat (tambien en el Escritorio).
+4. Abre Star.bat. Arranca el motor y abre
+   http://127.0.0.1:7860/
+   Esa pagina es la interfaz. Generar ya no necesita internet.
+
+No cierres la ventana negra: es el motor. Para parar, cierra esa ventana.
+
+A mano, con Python 3.11 instalado:
+
+  python -m venv .venv
+  .venv\Scripts\activate
+  pip install -r engine\requirements-windows.txt
+  python engine\download_model.py
+  windows\Star.bat
+
+Que usa tu hardware
+-------------------
+- GPU AMD: DirectML (torch-directml). La RX 9070 entra por aqui.
+- Si no hay DirectML, cae a CUDA y luego a CPU.
+- Una sola imagen a la vez. Interrumpir cancela el trabajo.
+- 2K y 4K no se pintan de un golpe a 3840 px (eso llena la VRAM y
+  puede reiniciar Windows). El motor genera a un tamano seguro y,
+  si pediste hires, hace un segundo pase local.
+
+Samplers
+--------
+Euler, Euler a, Heun, LMS, DDIM, DDPM, PNDM, DPM2, DPM2 a,
+DPM++ 2M, DPM++ 2M Karras, DPM++ SDE, DPM++ SDE Karras,
+DPM++ 2M SDE, DPM++ 3M SDE, UniPC, LCM, Restart.
+
+Sin internet
+------------
+Despues de que el instalador termine, puedes desconectar la red.
+Star.bat solo abre el motor que ya quedo en la carpeta.
